@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Connect</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <!--navbar-->
+    <header>
+        <nav class="navbar">
+            <div class="navbar_brand">
+                <img src="./assets/logo.png" alt="logo" class="navbar_logo"/>
+            </div>
+            <div class="navbar_nav_items">
+                <button class="nav_item button_primary"><a href="login.html" style="text-decoration: none; color: white;">Login to start</a></button>
+
+            </div>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <!--container-->
+    <main class="container">
+        <section class="hero_container">
+           
+            <div class="hero_description">
+                <div class="slideshow-container">
+
+                    <div class="mySlides fade">
+                      <img src="assets/img1.jpg" style="width:100%">
+                      
+                    </div>
+                    <div class="mySlides fade">
+                      <img src="assets/img2.jpg" style="width:100%">
+                    </div>
+                    
+                    <div class="mySlides fade">
+                      <img src="assets/img3.jpg" style="width:100%">
+                    </div>
+                    
+                    </div>
+                    <br>
+                    
+                    <div style="text-align:center">
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                    </div>
+                    <script>
+                        let slideIndex = 0;
+                        showSlides();
+                        
+                        function showSlides() {
+                          let i;
+                          let slides = document.getElementsByClassName("mySlides");
+                          let dots = document.getElementsByClassName("dot");
+                          for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";  
+                          }
+                          slideIndex++;
+                          if (slideIndex > slides.length) {slideIndex = 1}    
+                          for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                          }
+                          slides[slideIndex-1].style.display = "block";  
+                          dots[slideIndex-1].className += " active";
+                          setTimeout(showSlides, 2000); // Change image every 2 seconds
+                        }
+                        </script>
+                <div class="container">
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <h3 class="animate-charcter">Strengthen the Geci'an bond</h3>
+                      </div>
+                    </div>
+                  </div>
+                <h3><p align="center" style="color:white">Connecting Alumni and Students of Government engineering college Idukki to a next level </p></h3>
+                <br>
+                <br>
+                <br>
+            </div>
+        </section>
+    </main>
+   
+  <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>We are here</h4>
+                    <ul>
+                        <li><a href="#">abc tower</a></li>
+                        <li><a href="#">cheruthoni po</a></li>
+                        <li><a href="#">cheruthoni</a></li>
+                        <li><a href="#">685602
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+   </footer>
+</body>
+</html>
