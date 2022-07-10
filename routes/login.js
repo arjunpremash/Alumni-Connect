@@ -1,15 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db")
+const { check, validationResult } = require("express-validator");
 
-
-
-router.post('/', function(req, res, next) {
-	//input fields
+var validate = [ //validation and sanitation
+	check('login_username', 'Enter valid Username Address').isLength({min: 3}).exists().trim().escape(),
+	check('login_password').isLength({ min: 8 }).trim().escape()
+	.withMessage('Enter valid password')
+];
+router.post('/', validate, function(req, res, next) {
 	var login_username = req.body.login_username;
 	var login_password = req.body.login_password;
+	const errors = validationResult(req);
+	if(!errors.isEmpty()){  //if there is a validation error
+		res.status(400).json({errors : errors.array() })
+	}
 
-	if (login_username && login_password) {
+	else {  //no validation error
 		
 		db.query('SELECT * FROM users WHERE username = ? AND password = ?', [login_username, login_password], function(error, results, fields) {
 			// output error
@@ -26,9 +33,6 @@ router.post('/', function(req, res, next) {
 			}			
 			res.end();
 		});
-	} else {
-		res.send('Please enter Username and Password!');
-		res.end();
 	}
 });
 
