@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db")
 const { check, validationResult } = require("express-validator");
+const path = require("path");
+
 
 var validate = [ //validation and sanitation
 	check('login_username', 'Enter valid Username Address').isLength({min: 3}).exists().trim().escape(),
@@ -27,8 +29,9 @@ router.post('/', validate, function(req, res, next) {
 				    req.session.loggedin = true;
 				    req.session.username = login_username;
 				// Redirect to home page
-				res.redirect('auth/home');
-			} else {
+				return res.redirect('auth/home');
+			} 
+			else {
 				res.send('Incorrect Username and/or Password!');
 			}			
 			res.end();
@@ -37,16 +40,17 @@ router.post('/', validate, function(req, res, next) {
 });
 
 //home
-router.get('/home', function(request, response) {
+router.get('/home', function(req, res) {
 	// If the user is loggedin
-	if (request.session.loggedin) {
+	if (req.session.loggedin) {
 		// Output username
-		response.send('Welcome back, ' + request.session.username + '!');
+		//res.send("Logged In");
+		res.sendFile(path.join(__dirname,"../public/home.html"));
 	} else {
 		// Not logged in
-		response.send('Please login to view this page!');
+		res.send('Please login to view this page!');
 	}
-	response.end();
+	//res.end();
 });
 
 module.exports = router;
