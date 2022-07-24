@@ -241,60 +241,6 @@ nav{
 
 /* ------------------ main content ------------- */
 
-
-/* -------story-------- */
-.story-gallery{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-.story{
-    flex-basis: 18%;
-    padding-top: 31.86%;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-}
-.story1{
-    background-image: linear-gradient(transparent,rgba(0,0,0,0.5)), url(images/status-1.png);
-}
-.story2{
-    background-image: linear-gradient(transparent,rgba(0,0,0,0.5)), url(images/status-2.png);
-}
-.story3{
-    background-image: linear-gradient(transparent,rgba(0,0,0,0.5)), url(images/status-3.png);
-}
-.story4{
-    background-image: linear-gradient(transparent,rgba(0,0,0,0.5)), url(images/status-4.png);
-}
-.story5{
-    background-image: linear-gradient(transparent,rgba(0,0,0,0.5)), url(images/status-5.png);
-}
-.story img{
-    width: 45px;
-    border-radius: 50%;
-    border: 5px solid #1876f2;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-.story p{
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-size: 14px;
-}
-.story.story1 img{
-    top: unset;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%);
-    border: 0;
-    width: 35px;
-}
 /* ------------write post --------- */
 .write-post-container{
     width: 100%;
@@ -469,8 +415,18 @@ nav{
     cursor: pointer;
     padding: 5px 10px;
     border: 1px solid #9a9a9a;
-    color: #626262;
+    color: #0d0d0e;
     background: transparent;
+    border-radius: 4px;
+}
+.create-post-btn{
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #9a9a9a;
+    color: #eff0f3;
+    background: #4184db;
     border-radius: 4px;
 }
 .footer{

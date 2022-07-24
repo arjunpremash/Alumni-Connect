@@ -1,9 +1,12 @@
 
 var settingsMenu = document.querySelector(".settings-menu");
-
+var notification = document.querySelector(".notification-menu");
 
 function settingsMenuToggle(){
     settingsMenu.classList.toggle("settings-menu-height");
+}
+function notificationToggle(){
+    notification.classList.toggle("settings-menu-height");
 }
 
 // -----------dark mode button------------
