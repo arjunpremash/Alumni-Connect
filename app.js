@@ -1,47 +1,40 @@
-var express = require('express');
-var http = require('http');
+var express = require("express");
 var path = require("path");
-var bodyParser = require('body-parser');
-var rateLimit = require("express-rate-limit");
-const db = require("./db")
-const session = require('express-session');
-const loginRouter = require("./routes/login");
-const homeRouter = require("./routes/home");
-const signupRouter = require("./routes/signup");
-const flash = require("express-flash");
+var mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var passport = require("passport");
+var session = require("express-session");
+var flash = require("connect-flash");
+var params = require("./params/params");
+
+var setUpPassport = require("./setuppassport");
+//var routes = require("./routes");
 
 var app = express();
-var server = http.createServer(app);
+mongoose.connect(params.DATABASECONNECTION, {useUnifiedTopology:true, useNewUrlParser:true});
+setUpPassport();
 
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100 // limit each IP to 100 requests per windowMs
-//   });
-
-  
-
+app.set("port", process.env.PORT || 3000);
+//app.set("views", path.join(__dirname, "views"));
+//app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(cookieParser());
 app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-	}));
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
+    secret:"doemlfgddfsoi!gjdsf5684561dsf",
+    resave:false,
+    saveUninitialized:false
+}));
 
 app.use(express.static(path.join(__dirname,'./public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
-  
-//Route to MainPage
-app.use("/", homeRouter);
 
-// Signup
-app.use("/add", signupRouter)
+app.use("/", require("./routes/home"));
+//app.use("/api", require("./routes/api"));
 
-//Login
-app.use("/auth", loginRouter);
-  
-
-
-
-server.listen(3000,function(){ 
-	console.log("Server listening on port: 3000")});
+app.listen(app.get("port"), function(){
+    console.log("Server started on port " + app.get("port"));
+})
