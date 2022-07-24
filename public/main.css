@@ -4,8 +4,8 @@
     box-sizing: border-box;
 }
 body{
-    background-image: url(assets/bgg.png); 
-    background-size: cover;
+    /* background-image: url(assets/bgg.png); 
+    background-size: cover; */
     font-family: "merriweather",sans-serif;
 overflow-x: hidden;
 }
@@ -33,7 +33,7 @@ overflow-x: hidden;
   border-inline-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textclip 2s linear infinite;
+  animation: textclip 5s linear infinite;
   display: inline-block;
       font-size: 55px;
 }
@@ -45,17 +45,16 @@ overflow-x: hidden;
 }
 .navbar_brand{
     width: 100%;
- 
-
-  
-
+    display: flex;
+    align-items: center;
 }
 .navbar_logo{
-   width: 250px;
-   height: 125px;
-   
-    
-   
+   width: 50px;
+   margin-right: 4px;
+}
+.logo1{
+  width: 150px;
+  margin-right: 75px;
 }
 .navbar_nav_items{
     margin:10px;
@@ -64,8 +63,8 @@ overflow-x: hidden;
 .button_primary{
     background: linear-gradient(
         to right,
-    #54bcb8 100%,
-    #28A5EC 51%,
+        #1876f2 100%,
+    /* #28A5EC 100%, */
     #4cd385 100%
     );
     padding: 10px 15px;
@@ -148,9 +147,6 @@ overflow-x: hidden;
         font-size: 50px;
       }
       
-
-     
-    
 }
 @media(min-width:1400px){
 
