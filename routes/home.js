@@ -8,15 +8,18 @@ var router = express.Router();
 
 router.get("/", function (req, res) {
    // console.log("hello I'm on the start page");
-   res.sendFile(path.join(__dirname,"../public/main.html"));
+   res.render("main");
+   //res.sendFile(path.join(__dirname,"../public/main.html"));
 });
 
 router.get("/home", function (req, res) {
-   res.sendFile(path.join(__dirname,"../public/home.html"));
+  res.render("home");
+   //res.sendFile(path.join(__dirname,"../public/home.html"));
 });
 
 router.get("/login", function (req, res){
-  res.sendFile(path.join(__dirname,"../public/login.html"));
+  res.render("login");
+  //res.sendFile(path.join(__dirname,"../public/login.html"));
 })
 
 
@@ -60,7 +63,7 @@ router.post("/signup", function (req, res, next) {
    });
 
 }, passport.authenticate("signup", {
-   successRedirect: "/",
+   successRedirect: "/login",
    failureRedirect: "/signup",
    failureFlash: true
 }));

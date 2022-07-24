@@ -16,8 +16,8 @@ mongoose.connect(params.DATABASECONNECTION, {useUnifiedTopology:true, useNewUrlP
 setUpPassport();
 
 app.set("port", process.env.PORT || 3000);
-//app.set("views", path.join(__dirname, "views"));
-//app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "./public"));
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(session({
@@ -32,7 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use("/", require("./routes/home"));
+app.use("/", require("./routes"));
 //app.use("/api", require("./routes/api"));
 
 app.listen(app.get("port"), function(){

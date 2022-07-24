@@ -7,6 +7,20 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
    <body>
+      <div class="container">
+  
+         <%  if(error && error.length > 0) { %>
+             <div class="alert alert-danger" role="alert">
+               <%= error %>
+             </div>
+         <% } %>
+         
+         <%  if(info && info.length > 0) { %>
+             <div class="alert alert-info" role="alert">
+               <%= info %>
+             </div>
+         <% } %>
+         
       <div class="wrapper">
          <div class="title-text">
             <div class="title login">
