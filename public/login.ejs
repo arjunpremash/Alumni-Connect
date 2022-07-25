@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
    <body>
-      <div class="container">
+      <div class="container" align="center"   >
   
          <%  if(error && error.length > 0) { %>
              <div class="alert alert-danger" role="alert">
@@ -20,6 +20,7 @@
                <%= info %>
              </div>
          <% } %>
+      
          
       <div class="wrapper">
          <div class="title-text">
@@ -41,7 +42,7 @@
             <div class="form-inner">
                <form action="/login" method="POST" class="login">
                   <div class="field">
-                     <input type="text" id="login_username" name="login_username" placeholder="Username" required>
+                     <input type="text" id="login_username" name="login_username" placeholder="Email Address" required>
                   </div>
                   <div class="field">
                      <input type="password" id="login_password" name="login_password" placeholder="Password" required>

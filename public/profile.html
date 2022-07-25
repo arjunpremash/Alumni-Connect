@@ -4,18 +4,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
 </head>
 <body>
     
     <nav>
         <div class="nav-left">
-            <a href="index.html"><img src="images/logo1.png" class="logo"></a>
+            <a href="index.html"><img src="images/logo1.png" class="logo"> </a>
             <img src="images/1.png" class="logo1">
         <ul>
-           
-            <li><img src="images/notification.png"></li>
-            <li><img src="images/inbox.png"></li>
+            <div class="dropdown">
+                <button class="dropbtn"> <li>
+                    <i class="fa fa-bell bell" aria-hidden="true"></i>
+                </li></button>
+                <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+                </div>
+              </div>
+
+            <style>
+            .dropbtn {
+                
+                width: 50px;
+                height: 50px;
+                border: none;
+                cursor: pointer;
+                background-color:#1876f2 ;
+              }
+              
+              .dropdown {
+                position: relative;
+                display: inline-block;
+              }
+              
+              .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+              }
+              
+              .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+              }
+              
+              .dropdown-content a:hover {background-color: #f1f1f1}
+              
+              .dropdown:hover .dropdown-content {
+                display: block;
+              }
+              
+              .dropdown:hover .dropbtn {
+                background-color: #1876f2;
+              }
+              .bell{
+                    color: white;
+                    font-size: x-large;
+                    
+                }
+            </style>
+            <li>
+                <i class="fa fa-comments bell" aria-hidden="true"style="color: white; "></i>
+            </li>
         </ul>
         </div>
         
@@ -150,14 +208,7 @@
                 </div>
             </div>
 
-            
-
-
-
         </div>
-
-
-
         <div class="post-col">
             <div class="write-post-container">
                 <div class="user-profile">
@@ -171,9 +222,8 @@
                 <div class="post-input-container">
                     <textarea rows="3" placeholder="What's on your mind, Jack?"></textarea>
                     <div class="add-post-links">
-                        <a href="#"><img src="images/live-video.png"> Live Video</a>
                         <a href="#"><img src="images/photo.png"> Photo/Video</a>
-                        <a href="#"><img src="images/feeling.png"> Feeling/Activity</a>
+                        <button type="button" class="create-post-btn">Create Post</button>
                     </div>
                 </div>
             </div>
