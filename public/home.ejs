@@ -56,7 +56,6 @@
                 text-decoration: none;
                 display: block;
               }
-              
               .dropdown-content a:hover {background-color: #f1f1f1}
               
               .dropdown:hover .dropdown-content {
@@ -74,7 +73,17 @@
 
             </style>
             <li>
-                <i class="fa fa-comments bell" aria-hidden="true"style="color: white; "></i>
+                <i class="fa fa-comments bell" aria-hidden="true"style="color: white;" id="button"></i>
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+                <script type="text/javascript">
+                $(function(){
+                $('#button').click(function(){ 
+                 if(!$('#iframe').length) {
+                $('#iframeHolder').html('<iframe id="iframe" src="message.html" width="800p" height="800px" border="none" ></iframe>');
+                }
+                });   
+                });
+                </script>
             </li>
         </ul>
         </div>
@@ -172,7 +181,7 @@
                 </div>
                 <a href="#"><i class="fas fa-ellipsis-v"></i></a>
             </div>
-            <p class="post-text">Subscribe <span>@Easy Tutorials</span> YouTube channel to watch more videos on website developement and UI designs. <a href="">#EasyTutorials</a> <a href="">#YouTubeChannel</a></p>
+            <p class="post-text">
             <img src="images/feed-image-1.png" class="post-img">
             <div class="post-row">
                 <div class="activity-icons">
@@ -198,7 +207,7 @@
                 </div>
                 <a href="#"><i class="fas fa-ellipsis-v"></i></a>
             </div>
-            <p class="post-text">Like and share this video with friends, tag <span>@Easy Tutorials</span> facebook page on your post. Ask you doubts in the comments <a href="">#EasyTutorials</a> <a href="">#Subscribe</a></p>
+            <p class="post-text">
             <img src="images/feed-image-2.png" class="post-img">
             <div class="post-row">
                 <div class="activity-icons">
@@ -224,7 +233,7 @@
                 </div>
                 <a href="#"><i class="fas fa-ellipsis-v"></i></a>
             </div>
-            <p class="post-text">Like and share this video with friends, tag <span>@Easy Tutorials</span> facebook page on your post. Ask you doubts in the comments <a href="">#EasyTutorials</a> <a href="">#Subscribe</a></p>
+            <p class="post-text">
             <img src="images/feed-image-3.png" class="post-img">
             <div class="post-row">
                 <div class="activity-icons">
@@ -250,7 +259,7 @@
                 </div>
                 <a href="#"><i class="fas fa-ellipsis-v"></i></a>
             </div>
-            <p class="post-text">Like and share this video with friends, tag <span>@Easy Tutorials</span> facebook page on your post. Ask you doubts in the comments <a href="">#EasyTutorials</a> <a href="">#Subscribe</a></p>
+            <p class="post-text">
             <img src="images/feed-image-4.png" class="post-img">
             <div class="post-row">
                 <div class="activity-icons">
@@ -276,7 +285,7 @@
                 </div>
                 <a href="#"><i class="fas fa-ellipsis-v"></i></a>
             </div>
-            <p class="post-text">Like and share this video with friends, tag <span>@Easy Tutorials</span> facebook page on your post. Ask you doubts in the comments <a href="">#EasyTutorials</a> <a href="">#Subscribe</a></p>
+            <p class="post-text">
             <img src="images/feed-image-5.png" class="post-img">
             <div class="post-row">
                 <div class="activity-icons">
@@ -296,31 +305,16 @@
        </div>
 <!-- ----------right sidebar----------- -->
        <div class="right-sidebar">
-           
 
         <div class="sidebar-title">
-            <h4>Conversation</h4>
-            <a href="#">Hide Chat</a>
-        </div>
-
-        <div class="online-list">
-            <div class="online"><img src="images/member-1.png"></div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online"><img src="images/member-2.png"></div>
-            <p>Jackson Aston</p>
-        </div>
-        <div class="online-list">
-            <div class="online"><img src="images/member-3.png"></div>
-            <p>Samona Rose</p>
-        </div>
-        
+            
+            
+        <div id="iframeHolder"></div>
 
        </div>
     </div>
     <div class="footer">
-        <p>Copyright 2021 - Easy Tutorials YouTube Channel</p>
+        <p></p>
     </div>
 
     <script src="script.js"></script>
