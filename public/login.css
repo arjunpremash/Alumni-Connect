@@ -17,6 +17,9 @@ html,body{
   background: #1d353b;
   color: #fff;
 }
+.container{
+  align-items: center;
+}
 .wrapper{
   overflow: auto;
   height:425px;
