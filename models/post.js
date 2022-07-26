@@ -6,7 +6,7 @@ var postSchema = mongoose.Schema({
     createdAt : {type:Date, default:Date.now},
     image : {type:String, required:false },
     userID : {type:mongoose.Schema.Types.ObjectId, },
-    
+    username : {type:String, required:true}, 
 });
 
 var Post = mongoose.model("Post", postSchema);

@@ -12,7 +12,7 @@ var userSchema = mongoose.Schema({
     passout:{type:String},
     mobile:{type:Number},
     dept:{type:String},
-    
+    isAlumni:{type:Boolean},
     createdAt:{type:Date, default:Date.now}
 });
 

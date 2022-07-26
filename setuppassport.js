@@ -44,7 +44,7 @@ module.exports = function () {
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: "No user has that Email!" });
+                return done(null, false, { message: "email already registered!... Log in" });
             }
             user.checkPassword(password, function (err, isMatch) {
                 if (err) { return done(err); }

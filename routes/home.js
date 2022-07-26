@@ -7,6 +7,7 @@ var router = express.Router();
 var Post = require("../models/post");
 var multer = require("multer");
 var crypto = require("crypto");
+var ObjectId = require("mongoose").Types.ObjectId;
 
 var storage = multer.diskStorage({
    destination:'./uploads/images',
@@ -26,17 +27,34 @@ router.get("/", function (req, res) {
 });
 
 router.get("/home",ensureAuthenticated, function (req, res) {
-  res.render("home");
+   User.findById(req.user._id, function(err, user){
+      if(err){ console.log(err); }
+      else
+      {
+         Post.find({}).exec(function(err, homeposts){
+            if(err){ console.log(err); }
+      
+            res.render("home", {homeposts:homeposts,user:user});
+         });
+      }
+   });
+   
+  
    //res.sendFile(path.join(__dirname,"../public/home.html"));
 });
 
 router.get("/profile",ensureAuthenticated,async function (req, res) {
-   Post.find({userID:req.user._id}).exec(function(err, posts){
-      if(err){console.log(err);}
-
-      res.render("profile", {posts:posts});
+   User.findById(req.user._id, function(err, user){
+      if(err){ console.log(err); }
+      else
+      {
+         Post.find({userID:req.user._id}).exec(function(err, posts){
+            if(err){console.log(err);}
+      
+            res.render("profile", {posts:posts,user:user});
+         });
+      }
    });
-   
  });
 
 router.get("/login", function (req, res){
@@ -45,18 +63,27 @@ router.get("/login", function (req, res){
 })
 
 router.post("/add",upload.single('image'), function(req, res){
+var name;
+User.findById(req.user._id, function(err, user){
+   if(err){ console.log(err); }
+   else{
 
-   var newPost = new Post({
-      content : req.body.content,
-      userID : req.user._id,
-      image : req.file.path,
-   });
+      var newPost = new Post({
+         content : req.body.content,
+         userID : req.user._id,
+         image : req.file.path,
+         username : user.username,
+      });
+   
+      newPost.save(function(err, post){
+         if(err){console.log(err);}
+         res.redirect("/home");
+      });
+      console.log(newPost);
+      
+   }
+});
 
-   newPost.save(function(err, post){
-      if(err){console.log(err);}
-      res.redirect("/home");
-   });
-   console.log(newPost);
 });
 
 router.post("/login", passport.authenticate("login", {
@@ -75,7 +102,12 @@ router.post("/signup", function (req, res, next) {
    var passout = req.body.passout;
    var dept = req.body.dept;
    var mobile = req.body.mobile;
+   var currentYear = new Date().getFullYear()
 
+   if(passout>currentYear)
+   {
+      var isAlumni = false;
+   }
    User.findOne({ email: email }, function (err, user) {
       if (err) { return next(err); }
       if (user) {
@@ -92,6 +124,7 @@ router.post("/signup", function (req, res, next) {
          dept : dept,
          dob : dob,
          passout : passout,
+         isAlumni : isAlumni,
       });
 
       newUser.save(next);
@@ -100,7 +133,7 @@ router.post("/signup", function (req, res, next) {
 
 }, passport.authenticate("signup", {
    successRedirect: "/login",
-   failureRedirect: "/signup",
+   failureRedirect: "/login",
    failureFlash: true
 }));
 
