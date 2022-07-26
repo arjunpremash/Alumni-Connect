@@ -42,7 +42,7 @@
                     <img src="images/profile-pic.png">
                     <div>
                         <p>John Nicholson</p>
-                        <a href="profile.html">See your profile</a>
+                        <a href="/profile">See your profile</a>
                     </div>
                 </div>
                 <hr>
@@ -94,12 +94,15 @@
             </div>
 
             <div class="post-input-container">
-                <textarea rows="3" placeholder="What's on your mind, Jack?"></textarea>
+                <textarea rows="3" name="content" form="contentSubmission" placeholder="What's on your mind, Jack?"></textarea>
+                
                 <div class="add-post-links">
                     <a href="#"><img src="images/live-video.png"> Live Video</a>
-                    <a href="#"><img src="images/photo.png"> Photo/Video</a>
+                    <input type="file" form="contentSubmission" name="image">
                     <a href="#"><img src="images/feeling.png"> Feeling/Activity</a>
-                    <button type="button" class="create-post-btn">Create Post</button>
+                    <form action="/add" method="POST" id="contentSubmission" enctype="multipart/form-data">
+                        <button type="submit" class="create-post-btn">Create Post</button>
+                    </form>
                 </div>
             </div>
 
