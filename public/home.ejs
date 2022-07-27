@@ -91,7 +91,10 @@
         <div class="nav-right">
             <div class="search-box">
                 <img src="images/search.png">
-                <input type="text" placeholder="Search">
+                <form action="/home" method="put">
+                    <input type="text" id="search" name="search" placeholder="Search">
+                </form>
+                
             </div>
             <div class="nav-user-icon online" onclick="settingsMenuToggle()">
                 <img src="images/profile-pic.png">
@@ -136,7 +139,7 @@
                 </div>
                 <div class="settings-links">
                     <img src="images/logout.png" class="settings-icon">
-                    <a href="">Logout <img src="images/arrow.png" width="10px"></a>
+                    <a href="/logout">Logout <img src="images/arrow.png" width="10px"></a>
                 </div>
             </div>
            
@@ -162,12 +165,10 @@
             </div>
 
             <div class="post-input-container">
-                <textarea rows="3" name="content" form="contentSubmission" placeholder="What's on your mind, Jack?"></textarea>
+                <textarea rows="3" name="content" form="contentSubmission" placeholder="What's on your mind, <%= user.fullname %>?"></textarea>
                 
                 <div class="add-post-links">
-                    <a href="#"><img src="images/live-video.png"> Live Video</a>
                     <input type="file" form="contentSubmission" name="image">
-                    <a href="#"><img src="images/feeling.png"> Feeling/Activity</a>
                     <form action="/add" method="POST" id="contentSubmission" enctype="multipart/form-data">
                         <button type="submit" class="create-post-btn">Create Post</button>
                     </form>

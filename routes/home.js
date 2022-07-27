@@ -7,6 +7,7 @@ var router = express.Router();
 var Post = require("../models/post");
 var multer = require("multer");
 var crypto = require("crypto");
+const { authenticate } = require("passport");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 var storage = multer.diskStorage({
@@ -64,7 +65,18 @@ router.get("/profile",ensureAuthenticated,async function (req, res) {
 router.get("/login", function (req, res){
   res.render("login");
   //res.sendFile(path.join(__dirname,"../public/login.html"));
-})
+});
+
+router.get('/logout', function(req, res, next) {
+   // remove the req.user property and clear the login session
+      req.logout(function(err) {
+        if (err) { return next(err); }
+        req.session = null;
+        res.redirect('/login');
+      });
+   
+
+ });
 
 router.post("/add",upload.single('image'), function(req, res){
 var name;
@@ -89,6 +101,35 @@ User.findById(req.user._id, function(err, user){
 });
 
 });
+
+router.put('/home', ensureAuthenticated, (req, res)=>{
+   var searchName = req.body.search;
+   User.find({username:searchName}, function(err, user){
+      if (err) { return next(err); }
+      User.findById(user.userID, function(err, uuser){
+               user.updateOne({_id:req.params.id}, {$push: {followings: user._id}});
+               user.updateOne({_id: user._id},{$push: {followers: req.params.id}});
+      });
+   });
+
+   // User.findById(req.params.id)
+   // .then((otherUser)=>{
+   //     if(!otherUser.followers.includes(req.userInfo._id)){
+   //         Promise.all([
+   //             user.updateOne({_id:req.userInfo._id}, {$push: {followings: req.params.id}}),
+   //             user.updateOne({_id: otherUser._id},{$push: {followers: req.userInfo._id}})
+   //         ]).then(()=>{
+   //             res.json({message: "following user"});
+   //         })
+   //         .catch((e)=>{
+   //             res.json(e);
+   //         }); 
+   //     }else{
+   //         return res.json({message: "Already following user"});
+   //     }
+   // })
+   });
+   
 
 router.post("/login", passport.authenticate("login", {
    successRedirect: "/home",
@@ -116,7 +157,7 @@ router.post("/signup", function (req, res, next) {
       if (err) { return next(err); }
       if (user) {
          req.flash("error", "There's already an account with this email");
-         return res.redirect("/signup");
+         return res.redirect("/login");
       }
 
       var newUser = new User({
@@ -136,7 +177,7 @@ router.post("/signup", function (req, res, next) {
    });
 
 }, passport.authenticate("signup", {
-   successRedirect: "/login",
+   successRedirect: "/home",
    failureRedirect: "/login",
    failureFlash: true
 }));

@@ -13,7 +13,19 @@ var userSchema = mongoose.Schema({
     mobile:{type:Number},
     dept:{type:String},
     isAlumni:{type:Boolean},
-    createdAt:{type:Date, default:Date.now}
+    createdAt:{type:Date, default:Date.now},
+    following: [{
+            user:{ 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'User' 
+            },
+        }],
+    followers: [{
+            user:{ 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'User' 
+            },
+        }]
 });
 
 userSchema.pre("save", function(done){
