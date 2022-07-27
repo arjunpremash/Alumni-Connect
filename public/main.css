@@ -4,8 +4,8 @@
     box-sizing: border-box;
 }
 body{
-    /* background-image: url(assets/bgg.png); 
-    background-size: cover; */
+    background-image: url(assets/BGi.jpg); 
+    background-size: cover;
     font-family: "merriweather",sans-serif;
 overflow-x: hidden;
 }
