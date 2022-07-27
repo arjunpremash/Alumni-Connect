@@ -10,8 +10,8 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  /* background-image: url(assets/homeBG.jpg);
-  background-size: cover; */
+  background-image: url(assets/BGi.jpg);
+  background-size: cover;
 }
 ::selection{
   background: #1d353b;
@@ -27,7 +27,7 @@ html,body{
   
   background: #fff;
   background: transparent url(transparentbg.png);
-  background: #359dfffa;
+  background: #4da4f5;
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0px 15px 20px rgba(0,0,0,0.1);  
