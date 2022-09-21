@@ -141,17 +141,15 @@
                 <img src="images/profile.png" class="pd-image">
                 <div>
                     <h3><%= user.fullname %></h3>
-                    <p>120 Friends - 20 mutual</p>
-                    <img src="images/member-1.png">
-                    <img src="images/member-2.png">
-                    <img src="images/member-3.png">
-                    <img src="images/member-4.png">
+                    <p><%= user.followers.length %>  Followers</p>
                 </div>
             </div>
         </div>
         <div class="pd-right">
-
-            <button id="follow" type="button"><img src="images/add-friends.png"> Follow</button>
+            <form action = "/folllow" method="post">
+                <button type="submit" name="follow" value="<%=user._id%>" type="button"><img src="images/add-friends.png"> Follow</button>
+            </form>
+            
             <button type="button"><img src="images/message.png"> Message</button>
             <br>
             <a href=""><img src="images/more.png"></a>
@@ -166,9 +164,8 @@
                 <p class="intro-text">Believe in yourself and you can do unbelievable things. <img src="images/feeling.png"></p>
                 <hr>
                 <ul>
-                    <li><img src="images/profile-job.png"> Computer Science & Engineering Student</li>
+                    <li><img src="images/profile-job.png"> <%= user.dept %></li>
                     <li><img src="images/profile-study.png"> GEC Idukki</li>
-                    <li><img src="images/profile-home.png"> Lives in Kannur, Kerala</li>
                 </ul>
             </div>
 
