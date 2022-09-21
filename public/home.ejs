@@ -224,10 +224,12 @@
                 <div class="post-row">
                     <div class="activity-icons">
                         <form action = "/post/like" method="POST">
-                            <button type="submit" name="likebtn" value="<%=post._id%>"><img src="images/like-blue.png"><%=post.likes%></button>
+                            <div><button type="submit" name="likebtn" value="<%=post._id%>"><img src="images/like-blue.png"><%=post.likes%></button></div>
+                            <div><img src="images/comments.png"> 45</div>
+                            <div><img src="images/share.png"> 20</div>
                         </form>
-                        <div><img src="images/comments.png"> 45</div>
-                        <div><img src="images/share.png"> 20</div>
+                       
+                      
                     </div>
                     <div class="post-profile-icon">
                         <img src="images/profile-pic.png"> <i class="fas fa-caret-down"></i>
