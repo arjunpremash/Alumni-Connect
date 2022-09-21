@@ -22,18 +22,10 @@ var userSchema = mongoose.Schema({
         type: Array,
         default: [],
     },
-    /* following: [{
-            user:{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'User' 
-            },
-        }],
-    followers: [{
-            user:{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'User' 
-            },
-        }] */
+    notification: {
+        type: Array,
+        default : [],
+    }
 });
 
 userSchema.pre("save", function(done){

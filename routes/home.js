@@ -9,6 +9,7 @@ var multer = require("multer");
 var crypto = require("crypto");
 const { authenticate } = require("passport");
 var ObjectId = require("mongoose").Types.ObjectId;
+var Jobs = require("../models/jobs");
 
 var storage = multer.diskStorage({
    destination:'./uploads/images',
@@ -29,13 +30,14 @@ router.get("/", function (req, res) {
 
 router.get("/home",ensureAuthenticated, function (req, res) {
    User.findById(req.user._id, function(err, user){
+      const ntfcn = user.notification;
       if(err){ console.log(err); }
       else
       {
          Post.find({}).exec(function(err, homeposts){
             if(err){ console.log(err); }
       
-            res.render("home", {homeposts:homeposts,user:user});
+            res.render("home", {homeposts:homeposts, user : user, ntfcn : ntfcn});
          });
       }
    });
@@ -60,6 +62,35 @@ router.get("/profile",ensureAuthenticated,async function (req, res) {
       }
    });
 });
+
+router.get("/jobspot/:dept", async (req, res)=>{
+   try{
+      var dept;
+      switch(req.params.dept){
+         case "mech" :
+            dept = "Mechanical Engineering";
+            break;
+         case "cs" :
+            dept = "Computer Science & Engineering";
+            break;
+         case "it" :
+            dept = "Information Technology";
+            break;
+         case "eee" :
+            dept = "Electrical & Electronics Engineering";
+            break;
+         case "ec" :
+            dept = "Electronics Communication Engineering";
+            break;
+      }
+      const jobs = await Jobs.find({ dept : req.params.dept })
+      res.render("job", {jobs: jobs, dept: dept});
+   }catch(error) {
+      res.render.status(500).json(error);
+   }
+
+   
+})
 
 //searching profiles
 router.post("/search",ensureAuthenticated,async function (req, res) {
@@ -125,6 +156,7 @@ User.findById(req.user._id, function(err, user){
             if (!user.followers.includes(req.user._id)) {
                await user.updateOne({ $push: { followers: req.user._id } });
                await currentUser.updateOne({ $push: { followings: req.body.follow } });
+               await user.updateOne({ $push: { notification: req.user.username + " started following you"}});
             } else {
                req.flash("you already follow this user");
             }

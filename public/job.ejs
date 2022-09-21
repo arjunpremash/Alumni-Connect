@@ -48,40 +48,23 @@
 
         </ul>
         <div class="main_content">
-            <h1 align="center">Mechanical Engineering Jobs</h1>
+            <h1 align="center"><%= dept %> Jobs</h1>
 
             <div class="row" >
+              <% jobs.forEach(function(jobs) { %>
                 <div class="column" style="background-color:#aaa", "border-radius: 1cm;">
-                  <h2>Mechanical Enginner | Fresher</h2>
-                  <h4>Maruthi Placement Service</h4>
-                  <h5>Eligibility : Btech</h5>
-                  <h6>Salary 1.75-2.75 LPA | Location : New Delhi,Palwal</h6>
-                  <a href="">Click for Registration</a>
+                  <h2><%= jobs.title %></h2>
+                  <h4><%= jobs.company %></h4>
+                  <h5>min CGPA : <%= jobs.cgpa %></h5>
+                  <h6>Salary expected : <%= jobs.salary %> | Location : <%= jobs.location %></h6>
+                  <a href="<%=jobs.link%>">Click for Registration</a>
                 </div>
-                <div class="column" style="background-color:#bbb;">
-                    <h2>Mechanical Enginner | Fresher</h2>
-                    <h4>Maruthi Placement Service</h4>
-                    <h6>Salary 1.75-2.75 LPA  Location : New Delhi,Palwal</h6>
-                    <p>Some text..</p>
-                </div>
-                <div class="column" style="background-color:#ddd;">
-                    <h2>Mechanical Enginner | Fresher</h2>
-                    <h4>Maruthi Placement Service</h4>
-                    <h6>Salary 1.75-2.75 LPA  Location : New Delhi,Palwal</h6>
-                    <p>Some text..</p>
-                </div> 
-                <div class="column" style="background-color:#ddd;">
-                    <h2>Mechanical Enginner | Fresher</h2>
-                    <h4>Maruthi Placement Service</h4>
-                    <h6>Salary 1.75-2.75 LPA  Location : New Delhi,Palwal</h6>
-                    <p>Some text..</p>
-                </div> 
+                <% }) %>
               </div>
         </div>
         <div class="right-sidebar">
           <div id="iframeHolder"></div>
         </div>
-         
     </div>
 
 </body>
