@@ -61,6 +61,21 @@ router.get("/profile",ensureAuthenticated,async function (req, res) {
    });
 });
 
+//searching profiles
+router.post("/search",ensureAuthenticated,async function (req, res) {
+   User.findOne({username: req.body.search}, function(err, user){
+      if(err){ console.log(err); }
+      else
+      {
+         Post.find({userID:user._id}).exec(function(err, posts){
+            if(err){console.log(err);}
+      
+            res.render("profile", {posts:posts,user:user});
+         });
+      }
+   });
+});
+
 router.get("/login", function (req, res){
    res.render("login");
   //res.sendFile(path.join(__dirname,"../public/login.html"));
@@ -101,58 +116,30 @@ User.findById(req.user._id, function(err, user){
 
 });
 
-router.put('/home', ensureAuthenticated, (req, res)=>{
-   var searchName = req.body.search;
-   User.find({username:searchName}, function(err, user){
-      if (err) { return next(err); }
-      User.findById(user.userID, function(err, user){
-               user.updateOne({_id:req.params.id}, {$push: {followings: user._id}});
-               user.updateOne({_id: user._id},{$push: {followers: req.params.id}});
-      });
-   });
-
    //follow
-   router.put("/follow", async (req, res) => {
-      if (req.body.userId !== req.params.id) {
+   router.post("/folllow", async (req, res) => {
+      if (req.user._id !== req.body.follow) {
          try {
-            const user = await User.findById(req.params.id);
-            const currentUser = await User.findById(req.body.userId);
-            if (!user.followers.includes(req.body.userId)) {
-            await user.updateOne({ $push: { followers: req.body.userId } });
-            await currentUser.updateOne({ $push: { followings: req.params.id } });
-            res.status(200).json("user has been followed");
+            const user = await User.findById(req.body.follow);
+            const currentUser = await User.findById(req.user._id);
+            if (!user.followers.includes(req.user._id)) {
+               await user.updateOne({ $push: { followers: req.user._id } });
+               await currentUser.updateOne({ $push: { followings: req.body.follow } });
             } else {
-            res.status(403).json("you allready follow this user");
+               req.flash("you already follow this user");
             }
          } catch (err) {
             res.status(500).json(err);
          }
       } else {
-      res.status(403).json("you cant follow yourself");
+         req.flash("you cant follow yourself");
       }
+      res.redirect("/profile");
    });
 
 
-   // User.findById(req.params.id)
-   // .then((otherUser)=>{
-   //     if(!otherUser.followers.includes(req.userInfo._id)){
-   //         Promise.all([
-   //             user.updateOne({_id:req.userInfo._id}, {$push: {followings: req.params.id}}),
-   //             user.updateOne({_id: otherUser._id},{$push: {followers: req.userInfo._id}})
-   //         ]).then(()=>{
-   //             res.json({message: "following user"});
-   //         })
-   //         .catch((e)=>{
-   //             res.json(e);
-   //         }); 
-   //     }else{
-   //         return res.json({message: "Already following user"});
-   //     }
-   // })
-   });
-   
 
-   //like
+   //like/unlike post
    router.post("/post/like", async (req, res) => {
       try {
          const post = await Post.findById(req.body.likebtn);
@@ -171,16 +158,6 @@ router.put('/home', ensureAuthenticated, (req, res)=>{
       }
       });
 
-      router.put("/home/like", async(req, res) => {
-         try {
-            const post =await Post.findById(req.body.likebtn);
-            const updateLikes = await post.updateOne({likes: post.likes + 1});
-
-            //res.redirect('/home');
-         } catch (err){
-            res.status(500).json(err);
-         }
-      })
 
 router.post("/login", passport.authenticate("login", {
    successRedirect: "/home",
