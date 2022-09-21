@@ -81,7 +81,9 @@
         <div class="nav-right">
             <div class="search-box">
                 <img src="images/search.png">
-                <input type="text" placeholder="Search">
+                <form action="/search" method="post">
+                    <input type="text" id="search" name="search" placeholder="Search" required>
+                </form>
             </div>
             <div class="nav-user-icon online" onclick="settingsMenuToggle()">
                 <img src="images/profile-pic.png">
@@ -166,6 +168,7 @@
                 <ul>
                     <li><img src="images/profile-job.png"> <%= user.dept %></li>
                     <li><img src="images/profile-study.png"> GEC Idukki</li>
+                    <li><%= user.isAlumni ? "Alumni" : "Student" %></li>
                 </ul>
             </div>
 
