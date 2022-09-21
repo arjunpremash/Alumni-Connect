@@ -14,7 +14,15 @@ var userSchema = mongoose.Schema({
     dept:{type:String},
     isAlumni:{type:Boolean},
     createdAt:{type:Date, default:Date.now},
-    following: [{
+    followings: {
+        type: Array,
+        default: [],
+    },
+    followers: {
+        type: Array,
+        default: [],
+    },
+    /* following: [{
             user:{ 
                 type: mongoose.Schema.Types.ObjectId, 
                 ref: 'User' 
@@ -25,7 +33,7 @@ var userSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId, 
                 ref: 'User' 
             },
-        }]
+        }] */
 });
 
 userSchema.pre("save", function(done){
@@ -47,11 +55,11 @@ userSchema.pre("save", function(done){
 });
 
 userSchema.methods.checkPassword = function(guess, done){
-      if(this.password != null){
-          bcrypt.compare(guess,this.password, function(err, isMatch){
-             done(err, isMatch);
-          });
-      }
+    if(this.password != null){
+            bcrypt.compare(guess,this.password, function(err, isMatch){
+            done(err, isMatch);
+        });
+    }
 }
 
 var User = mongoose.model("User", userSchema);

@@ -223,7 +223,9 @@
                 <% } %>
                 <div class="post-row">
                     <div class="activity-icons">
-                        <div><img src="images/like-blue.png"> 120</div>
+                        <form action = "/post/like" method="POST">
+                            <button type="submit" name="likebtn" value="<%=post._id%>"><img src="images/like-blue.png"><%=post.likes%></button>
+                        </form>
                         <div><img src="images/comments.png"> 45</div>
                         <div><img src="images/share.png"> 20</div>
                     </div>

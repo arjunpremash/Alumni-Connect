@@ -6,6 +6,22 @@ function settingsMenuToggle(){
     settingsMenu.classList.toggle("settings-menu-height");
 }
 
+const button = document.getElementById('follow');
+button.addEventListener('click', function(e) {
+    console.log('button was clicked');
+
+    fetch('/follow', {method: "PUT"})
+    .then(function(response) {
+        if(response.ok) {
+            console.log('click was recorded');
+            return;
+        }
+        //throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
 
 // -----------dark mode button------------
 

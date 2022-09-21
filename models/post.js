@@ -7,6 +7,8 @@ var postSchema = mongoose.Schema({
     image : {type:String, required:false },
     userID : {type:mongoose.Schema.Types.ObjectId, },
     username : {type:String, required:true}, 
+    likes : {type:Number, default:0},
+    likedBy : {type:Array, default:[]},
 });
 
 var Post = mongoose.model("Post", postSchema);

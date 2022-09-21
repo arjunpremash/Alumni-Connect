@@ -40,7 +40,6 @@ router.get("/home",ensureAuthenticated, function (req, res) {
       }
    });
    
-  
    //res.sendFile(path.join(__dirname,"../public/home.html"));
 });
 
@@ -60,23 +59,23 @@ router.get("/profile",ensureAuthenticated,async function (req, res) {
          });
       }
    });
- });
+});
 
 router.get("/login", function (req, res){
-  res.render("login");
+   res.render("login");
   //res.sendFile(path.join(__dirname,"../public/login.html"));
 });
 
 router.get('/logout', function(req, res, next) {
    // remove the req.user property and clear the login session
       req.logout(function(err) {
-        if (err) { return next(err); }
-        req.session = null;
-        res.redirect('/login');
+         if (err) { return next(err); }
+         req.session = null;
+         res.redirect('/login');
       });
    
 
- });
+});
 
 router.post("/add",upload.single('image'), function(req, res){
 var name;
@@ -106,11 +105,33 @@ router.put('/home', ensureAuthenticated, (req, res)=>{
    var searchName = req.body.search;
    User.find({username:searchName}, function(err, user){
       if (err) { return next(err); }
-      User.findById(user.userID, function(err, uuser){
+      User.findById(user.userID, function(err, user){
                user.updateOne({_id:req.params.id}, {$push: {followings: user._id}});
                user.updateOne({_id: user._id},{$push: {followers: req.params.id}});
       });
    });
+
+   //follow
+   router.put("/follow", async (req, res) => {
+      if (req.body.userId !== req.params.id) {
+         try {
+            const user = await User.findById(req.params.id);
+            const currentUser = await User.findById(req.body.userId);
+            if (!user.followers.includes(req.body.userId)) {
+            await user.updateOne({ $push: { followers: req.body.userId } });
+            await currentUser.updateOne({ $push: { followings: req.params.id } });
+            res.status(200).json("user has been followed");
+            } else {
+            res.status(403).json("you allready follow this user");
+            }
+         } catch (err) {
+            res.status(500).json(err);
+         }
+      } else {
+      res.status(403).json("you cant follow yourself");
+      }
+   });
+
 
    // User.findById(req.params.id)
    // .then((otherUser)=>{
@@ -130,6 +151,36 @@ router.put('/home', ensureAuthenticated, (req, res)=>{
    // })
    });
    
+
+   //like
+   router.post("/post/like", async (req, res) => {
+      try {
+         const post = await Post.findById(req.body.likebtn);
+            if (!post.likedBy.includes(req.user._id)) {
+               await post.updateOne({ $push: { likedBy: req.user._id } });
+               const updateLikes = await post.updateOne({likes: post.likes + 1});
+                  //res.status(200).json("The post has been liked");
+               } else {
+                  await post.updateOne({ $pull: { likedBy: req.user._id } });
+                  const updateLikes = await post.updateOne({likes: post.likes - 1});
+                  //res.status(200).json("The post has been disliked");
+               }
+            res.redirect('/home');
+      } catch (err) {
+         res.status(500).json(err);
+      }
+      });
+
+      router.put("/home/like", async(req, res) => {
+         try {
+            const post =await Post.findById(req.body.likebtn);
+            const updateLikes = await post.updateOne({likes: post.likes + 1});
+
+            //res.redirect('/home');
+         } catch (err){
+            res.status(500).json(err);
+         }
+      })
 
 router.post("/login", passport.authenticate("login", {
    successRedirect: "/home",
