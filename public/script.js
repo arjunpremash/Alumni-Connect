@@ -8,7 +8,9 @@ function settingsMenuToggle(){
 
 
 // -----------dark mode button------------
-
+function toggleLike(x){
+    x.classList.toggle("fa-thumbs-down");
+}
 var darkBtn = document.getElementById("dark-btn");
 
 darkBtn.onclick = function(){

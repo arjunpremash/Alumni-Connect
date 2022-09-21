@@ -10,7 +10,7 @@ var crypto = require("crypto");
 const { authenticate } = require("passport");
 var ObjectId = require("mongoose").Types.ObjectId;
 var Jobs = require("../models/jobs");
-
+var message = "";
 var storage = multer.diskStorage({
    destination:'./uploads/images',
    filename: function(req, file, cb){
@@ -51,13 +51,20 @@ router.get("/message",ensureAuthenticated, function(req, res){
 
 router.get("/profile",ensureAuthenticated,async function (req, res) {
    User.findById(req.user._id, function(err, user){
+      const following = user.followings;
+      var f = [];
+      following.forEach(function(following){
+         User.findById(following, function(err, name){
+            f.push(name.fullname);
+         });
+      });
       if(err){ console.log(err); }
       else
       {
          Post.find({userID:req.user._id}).exec(function(err, posts){
             if(err){console.log(err);}
       
-            res.render("profile", {posts:posts,user:user});
+            res.render("profile", {posts:posts,user:user,f:f});
          });
       }
    });
@@ -95,13 +102,20 @@ router.get("/jobspot/:dept", async (req, res)=>{
 //searching profiles
 router.post("/search",ensureAuthenticated,async function (req, res) {
    User.findOne({username: req.body.search}, function(err, user){
+      const following = user.followings;
+      var f = [];
+      following.forEach(function(following){
+         User.findById(following, function(err, name){
+            f.push(name.fullname);
+         });
+      });
       if(err){ console.log(err); }
       else
       {
          Post.find({userID:user._id}).exec(function(err, posts){
             if(err){console.log(err);}
       
-            res.render("profile", {posts:posts,user:user});
+            res.render("profile", {posts:posts,user:user,f:f});
          });
       }
    });
@@ -140,16 +154,26 @@ User.findById(req.user._id, function(err, user){
          if(err){console.log(err);}
          res.redirect("/home");
       });
-      console.log(newPost);
       
    }
 });
+});
 
+
+router.post("/cover",upload.single('cover'), function(req, res){
+   var name;
+   User.findById(req.user._id, function(err, user){
+      if(err){ console.log(err); }
+      else{
+         user.updateOne({ $set: {coverPhoto : req.file.path} });
+         res.redirect("/profile");
+      }
+   });
 });
 
    //follow
    router.post("/folllow", async (req, res) => {
-      if (req.user._id !== req.body.follow) {
+      if (req.user._id != req.body.follow) {
          try {
             const user = await User.findById(req.body.follow);
             const currentUser = await User.findById(req.user._id);
@@ -158,13 +182,13 @@ User.findById(req.user._id, function(err, user){
                await currentUser.updateOne({ $push: { followings: req.body.follow } });
                await user.updateOne({ $push: { notification: req.user.username + " started following you"}});
             } else {
-               req.flash("you already follow this user");
+               message = req.flash("info", "you already follow this user");
             }
          } catch (err) {
             res.status(500).json(err);
          }
       } else {
-         req.flash("you cant follow yourself");
+         message = req.flash("you cant follow yourself");
       }
       res.redirect("/profile");
    });

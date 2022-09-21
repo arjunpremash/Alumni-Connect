@@ -465,6 +465,12 @@ nav{
 
 
 /* -------- profile page --------- */
+.fa-thumbs-o-up{
+    color : #1556d6;
+}
+.fa-thumbs-down{
+    color: #9a9a9a;
+}
 .profile-container{
     padding: 20px 15%;
     color: #626262;

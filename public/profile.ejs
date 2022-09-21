@@ -99,34 +99,23 @@
                 <div class="user-profile">
                     <img src="images/profile-pic.png">
                     <div>
-                        <p><%= user.fullname %></p>
-                        <a href="profile.html">See your profile</a>
+                        <p><%= user.username %></p>
+                        <a href="/profile">See your profile</a>
                     </div>
                 </div>
                 <hr>
                 <div class="user-profile">
                     <img src="images/feedback.png">
+                    
                     <div>
                         <p>Give Feedback</p>
-                        <a href="">Help us improve the new deisgn</a>
+                        <a href="mailto:alumniconnect@support.in">Help us improve the new deisgn</a>
                     </div>
                 </div>
                 <hr>
                 <div class="settings-links">
-                    <img src="images/setting.png" class="settings-icon">
-                    <a href="">Settings & Privacy <img src="images/arrow.png" width="10px"></a>
-                </div>
-                <div class="settings-links">
-                    <img src="images/help.png" class="settings-icon">
-                    <a href="">Help & Support <img src="images/arrow.png" width="10px"></a>
-                </div>
-                <div class="settings-links">
-                    <img src="images/display.png" class="settings-icon">
-                    <a href="">Display & Accessibility <img src="images/arrow.png" width="10px"></a>
-                </div>
-                <div class="settings-links">
                     <img src="images/logout.png" class="settings-icon">
-                    <a href="">Logout <img src="images/arrow.png" width="10px"></a>
+                    <a href="/logout">Logout <img src="images/arrow.png" width="10px"></a>
                 </div>
             </div>
             
@@ -134,7 +123,6 @@
     </nav>
 
     <!-- ----profile page --------- -->
-
 <div class="profile-container">
     <img src="images/cover.png" class="cover-img">
     <div class="profile-details">
@@ -154,7 +142,10 @@
             
             <button type="button"><img src="images/message.png"> Message</button>
             <br>
-            <a href=""><img src="images/more.png"></a>
+            <input type="file" form="updateCover" name="cover">
+            <form action="/cover" method="POST" id="updateCover" enctype="multipart/form-data">
+                <button type="submit" class="update-cover-btn">Update Cover</button>
+            </form>
         </div>
     </div>
 
@@ -179,12 +170,14 @@
                 </div>
                 
                 <div class="photo-box">
-                    <div><img src="images/photo1.png"></div>
-                    <div><img src="images/photo2.png"></div>
-                    <div><img src="images/photo3.png"></div>
-                    <div><img src="images/photo4.png"></div>
-                    <div><img src="images/photo5.png"></div>
-                    <div><img src="images/photo6.png"></div>
+                    <% posts.forEach(function(post) { %>
+                        <% if(post.image != null) { %>
+                            <div><img src="<%= '../' + post.image %>"></div>
+        
+                        <% } else { %>
+                            
+                        <% } %>
+                    <% }) %>
                 </div>
             </div>
 
@@ -193,17 +186,11 @@
                     <h3>Friends</h3>
                     <a href="">All Friends</a>
                 </div>
-                <p>120 (10 mutual)</p>
+                <p><%= user.followings.length %></p>
                 <div class="friends-box">
-                    <div><img src="images/member-1.png"> <p>Joseph N</p></div>
-                    <div><img src="images/member-2.png"> <p>Nathan N</p></div>
-                    <div><img src="images/member-3.png"> <p>George D</p></div>
-                    <div><img src="images/member-4.png"> <p>Francis L</p></div>
-                    <div><img src="images/member-5.png"> <p>Anthony E</p></div>
-                    <div><img src="images/member-6.png"> <p>Michael A</p></div>
-                    <div><img src="images/member-7.png"> <p>Edward M</p></div>
-                    <div><img src="images/member-8.png"> <p>Bradon C</p></div>
-                    <div><img src="images/member-9.png"> <p>James Doe</p></div>
+                    <% f.forEach(function(f){ %>
+                    <li><%= f %></li>
+                    <% }) %>
                 </div>
             </div>
 
@@ -219,10 +206,13 @@
                 </div>
     
                 <div class="post-input-container">
-                    <textarea rows="3" placeholder="What's on your mind, Jack?"></textarea>
+                    <textarea rows="3" name="content" form="contentSubmission" placeholder="What's on your mind, <%= user.fullname %>?"></textarea>
+                    
                     <div class="add-post-links">
-                        <a href="#"><img src="images/photo.png"> Photo/Video</a>
-                        <button type="button" class="create-post-btn">Create Post</button>
+                        <input type="file" form="contentSubmission" name="image">
+                        <form action="/add" method="POST" id="contentSubmission" enctype="multipart/form-data">
+                            <button type="submit" class="create-post-btn">Create Post</button>
+                        </form>
                     </div>
                 </div>
             </div>

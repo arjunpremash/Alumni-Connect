@@ -14,6 +14,7 @@ var userSchema = mongoose.Schema({
     dept:{type:String},
     isAlumni:{type:Boolean},
     createdAt:{type:Date, default:Date.now},
+    coverPhoto : {type:String, required:false },
     followings: {
         type: Array,
         default: [],

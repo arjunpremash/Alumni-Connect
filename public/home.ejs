@@ -20,9 +20,9 @@
                     <span class="fa fa-bell bell" aria-hidden="true" style="color: white";></span>
                 </li></button>
                 <div class="dropdown-content">
-                <%= ntfcn.forEach(function(ntfcn){ 
-                    <h5><%= ntfcn %></h5>
-                <%= }) %>
+                <% ntfcn.forEach(function(ntfcn){ %>
+                    <a><%= ntfcn %></a>
+                <% }) %>
                 </div>
             </div>
             <style>
@@ -33,12 +33,12 @@
                 border: none;
                 cursor: pointer;
                 background-color:#1876f2 ;
-              }
-              
-              .dropdown {
+            }
+
+            .dropdown {
                 position: relative;
                 display: inline-block;
-              }
+            }
               
               .dropdown-content {
                 display: none;
@@ -133,22 +133,10 @@
                     
                     <div>
                         <p>Give Feedback</p>
-                        <a href="">Help us improve the new deisgn</a>
+                        <a href="mailto:alumniconnect@support.in">Help us improve the new deisgn</a>
                     </div>
                 </div>
                 <hr>
-                <div class="settings-links">
-                    <img src="images/setting.png" class="settings-icon">
-                    <a href="">Settings & Privacy <img src="images/arrow.png" width="10px"></a>
-                </div>
-                <div class="settings-links">
-                    <img src="images/help.png" class="settings-icon">
-                    <a href="">Help & Support <img src="images/arrow.png" width="10px"></a>
-                </div>
-                <div class="settings-links">
-                    <img src="images/display.png" class="settings-icon">
-                    <a href="">Display & Accessibility <img src="images/arrow.png" width="10px"></a>
-                </div>
                 <div class="settings-links">
                     <img src="images/logout.png" class="settings-icon">
                     <a href="/logout">Logout <img src="images/arrow.png" width="10px"></a>
@@ -224,10 +212,8 @@
                     <div class="activity-icons">
 
                     <div><form action = "/post/like" method="POST">
-                            <button type="submit" name="likebtn" value="<%=post._id%>"><i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:#1556d6;"></i><%=post.likes%></button>
+                            <button type="submit" name="likebtn" value="<%=post._id%>"><i onClick="toggleLike(this)" class="fa fa-thumbs-o-up fa-2x" aria-hidden="true"></i><%=post.likes%></button>
                         </form></div>
-                        <div><img src="images/comments.png"> 45</div>
-                        <div><img src="images/share.png"> 20</div>
                     </div>
                     <div class="post-profile-icon">
                         <img src="images/profile-pic.png"> <i class="fas fa-caret-down"></i>
